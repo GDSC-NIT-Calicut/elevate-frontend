@@ -1,15 +1,53 @@
-"use client"
-// hooks/useAuth.js
-import { useEffect, useState } from 'react'
+// hooks/useAuth.ts
+import { useSession } from "next-auth/react"
+import { useState } from "react"
+
+import axios from "axios"
+
+// hooks/useAuth.ts
+type AuthState = {
+  isAuthenticated: boolean
+  user: null | { id: string; email: string; name: string }
+  tokens: null | { access: string; refresh: string }
+  loading: boolean
+  error: null | string
+}
 
 export const useAuth = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const { data: session, status } = useSession()
+  const [authState, setAuthState] = useState<AuthState>({
+    isAuthenticated: false,
+    user: null,
+    tokens: null,
+    loading: true,
+    error: null,
+  })
 
-  useEffect(() => {
-    // Example logic: check for token in localStorage
-    const token = localStorage.getItem('token')
-    setIsAuthenticated(!!token)
-  }, [])
+  const getDjangoTokens = async () => {
+    if (!session) return
 
-  return { isAuthenticated }
+    try {
+      const response = await axios.post(`${process.env.NEXTAUTH_URL}/api/auth/verify-and-get-tokens`)
+      const { tokens, user } = response.data
+      
+      localStorage.setItem('access_token', tokens.access)
+      localStorage.setItem('refresh_token', tokens.refresh)
+      
+      setAuthState({
+        isAuthenticated: true,
+        user,
+        tokens,
+        loading: false,
+        error: null,
+      })
+    } catch (error) {
+      setAuthState(prev => ({
+        ...prev,
+        loading: false,
+        error: 'Failed to authenticate with backend',
+      }))
+    }
+  }
+
+  // Additional implementation...
 }
