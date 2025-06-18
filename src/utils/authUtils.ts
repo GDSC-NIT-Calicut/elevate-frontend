@@ -1,5 +1,5 @@
 // utils/authUtils.ts
-export function extractUserInfoFromEmail(email: string) {
+export default function extractUserInfoFromEmail(email: string) {
   if (!email.endsWith('@nitc.ac.in')) return null;
 
   const [firstPart] = email.split('@');
@@ -28,5 +28,3 @@ export function extractUserInfoFromEmail(email: string) {
     department,
   };
 }
-
-

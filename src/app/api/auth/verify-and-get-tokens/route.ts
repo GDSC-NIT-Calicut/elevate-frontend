@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
-import { extractUserInfoFromEmail } from '@/utils/authUtils';
 import axios from 'axios';
 import { auth } from '@/auth';
+import extractUserInfoFromEmail from '@/utils/authUtils';
 
 export async function POST(request: Request) {
   console.log("verify-and-get-tokens: POST request received");
