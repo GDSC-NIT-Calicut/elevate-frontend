@@ -11,7 +11,7 @@ export default function ExperiencePage() {
   useEffect(() => {
     if (!loading) {
       if (!isAuthenticated || user?.role !== 'student') {
-        router.push('/');
+        router.push('/401');
       }
     }
   }, [isAuthenticated, user, loading, router]);
