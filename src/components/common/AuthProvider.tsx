@@ -34,31 +34,36 @@ const AuthContext = createContext<AuthContextType>({
 });
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const { status } = useSession();
+  const { data: session, status } = useSession();
   const [user, setUser] = useState<User | null>(null);
   const [tokens, setTokens] = useState<Tokens | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchTokens = async () => {
-      if (status === 'authenticated') {
+      if (status === 'authenticated' && session) {
+        console.log('Fetching tokens for', session.user?.email);
         try {
           const res = await axios.post('/api/auth/verify-and-get-tokens');
+          console.log('Token response:', res.data);
 
           if (res.data.success) {
             const { tokens, user } = res.data;
-
-            // Store tokens in localStorage
             localStorage.setItem('accessToken', tokens.access);
             localStorage.setItem('refreshToken', tokens.refresh);
-
             setTokens(tokens);
             setUser(user);
+          } else {
+            console.warn('verify-and-get-tokens returned success: false');
+            setUser(null);
+            setTokens(null);
           }
         } catch (err) {
           console.error('Token verification failed:', err);
           localStorage.removeItem('accessToken');
           localStorage.removeItem('refreshToken');
+          setUser(null);
+          setTokens(null);
         } finally {
           setLoading(false);
         }
@@ -72,7 +77,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     };
 
     fetchTokens();
-  }, [status]);
+  }, [status, session]);
 
   return (
     <AuthContext.Provider
@@ -89,4 +94,3 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 };
 
 export const useAuth = () => useContext(AuthContext);
-
