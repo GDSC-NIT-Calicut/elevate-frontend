@@ -6,7 +6,7 @@ export interface NavbarProps {
   variant?: 'blue' | 'white';
 }
 
-export const Navbar = ({ variant }: NavbarProps) => (
+export const Navbar = ({ variant='white' }: NavbarProps) => (
   <nav className={`flex justify-between items-center p-4 border-b shadow-sm ${variant === 'blue' ? 'bg-blue-400' : 'bg-white'} text-black`}>
     <Link href={'/'} className="text-xl">Elevate NITC</Link>
     <div className="Links flex gap-3 ">
