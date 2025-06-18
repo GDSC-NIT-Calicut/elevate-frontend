@@ -28,3 +28,5 @@ export function extractUserInfoFromEmail(email: string) {
     department,
   };
 }
+
+
