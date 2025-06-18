@@ -3,7 +3,7 @@
 import { useAuth } from '@/components/common/AuthProvider';
 import { useRouter } from 'next/navigation';
 
-export default function StudentPage({ params }: { params: { roll_number: string } }) {
+export default function ExperiencePage({ params }: { params: { roll_number: string } }) {
   const { user, loading, isAuthenticated } = useAuth();
   const router = useRouter();
 

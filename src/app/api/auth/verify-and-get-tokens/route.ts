@@ -1,19 +1,21 @@
-// src/app/api/auth/verify-and-get-tokens/route.ts
 import { NextResponse } from 'next/server';
 import { extractUserInfoFromEmail } from '@/utils/authUtils';
 import axios from 'axios';
-// import { auth } from '@/auth';
-import { auth } from "@/app/api/auth/[...nextauth]/route";
+import { auth } from '@/app/api/auth/[...nextauth]/route';
 
 export async function POST(request: Request) {
   console.log("verify-and-get-tokens: POST request received");
 
   const session = await auth();
-  console.log("verify-and-get-tokens: Session:\n", session);
 
   if (!session?.user?.email) {
     console.log("verify-and-get-tokens: No session found");
     return NextResponse.json({ error: 'No session found' }, { status: 401 });
+  }
+
+  if (!session.idToken || !session.accessToken) {
+    console.log("verify-and-get-tokens: Missing Google OAuth tokens in session");
+    return NextResponse.json({ error: 'Missing Google OAuth tokens in session' }, { status: 401 });
   }
 
   const userInfo = extractUserInfoFromEmail(session.user.email);
@@ -24,25 +26,38 @@ export async function POST(request: Request) {
 
   const payload = {
     id_token: session.idToken,
+    access_token: session.accessToken,
     email: session.user.email,
     name: session.user.name,
     roll_number: userInfo.rollNumber,
     department: userInfo.department,
     programme: userInfo.programme,
-    // provider: session.provider,
-    // access_token: session.accessToken,
-    
   };
 
-  console.log("verify-and-get-tokens: Payload to Django:", payload);
+  if (process.env.NODE_ENV === "development") {
+    console.log("verify-and-get-tokens: Payload to Django:", payload);
+  }
+
+  const djangoURL = process.env.DJANGO_BACKEND_URL;
+
+  if (!djangoURL) {
+    return NextResponse.json({ error: 'Django backend URL not configured' }, { status: 500 });
+  }
 
   try {
     const response = await axios.post(
-      `${process.env.DJANGO_BACKEND_URL}/api/user/google-oauth/`,
-      payload
+      `${djangoURL}/api/user/google-oauth/`,
+      payload,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
     );
 
-    console.log("verify-and-get-tokens: Django response:\n", response.data);
+    if (process.env.NODE_ENV === "development") {
+      console.log("verify-and-get-tokens: Django response:\n", response.data);
+    }
 
     return NextResponse.json({
       success: true,
@@ -50,7 +65,11 @@ export async function POST(request: Request) {
       user: response.data.user,
     });
   } catch (error: any) {
-    console.error("verify-and-get-tokens: Django error:", error.response?.data || error.message);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    const status = error.response?.status || 500;
+    const data = error.response?.data || { message: error.message };
+
+    console.error("verify-and-get-tokens: Django error:", data);
+
+    return NextResponse.json({ error: data }, { status });
   }
 }
