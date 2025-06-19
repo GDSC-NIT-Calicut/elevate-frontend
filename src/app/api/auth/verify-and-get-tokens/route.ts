@@ -46,7 +46,7 @@ export async function POST(request: Request) {
 
   try {
     const response = await axios.post(
-      `${djangoURL}/api/user/google-oauth/`,
+      `${djangoURL}/api/user/google-oauth`,
       payload,
       {
         headers: {
