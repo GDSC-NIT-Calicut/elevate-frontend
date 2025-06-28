@@ -51,7 +51,7 @@ const CompanyDetails = () => {
   
   setLoading(true)
   console.log(`Making request to: http://localhost:8000/api/company/${id}/`);
-  axios.get(`http://localhost:8000/api/company/${id}`, {
+  axios.get(`http://localhost:8000/api/company/${id}/`, {
     headers: { Authorization: `Bearer ${token}` }
   })
     .then(res => {
@@ -74,14 +74,7 @@ const CompanyDetails = () => {
     <div style={{ maxWidth: 700, margin: '0 auto', padding: 32 }}>
       <button onClick={() => router.back()} style={{ marginBottom: 24 }}>← Back</button>
       <div style={{ display: 'flex', alignItems: 'center', marginBottom: 24 }}>
-        <img
-          src={company.logo}
-          alt={company.name}
-          style={{ width: 100, height: 100, objectFit: 'contain', marginRight: 32 }}
-          onError={(e) => {
-            (e.target as HTMLImageElement).src = '/default-company.png'
-          }}
-        />
+        
         <div>
           <h1 style={{ margin: 0 }}>{company.name}</h1>
           <a href={company.website} target="_blank" rel="noopener noreferrer">

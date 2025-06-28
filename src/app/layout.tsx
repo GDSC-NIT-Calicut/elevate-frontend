@@ -4,6 +4,7 @@ import "./globals.css";
 import { SessionProvider } from "@/components/common/SessionProvider";
 import { Navbar } from "@/components/common/Navbar";
 import { AuthProvider } from "@/components/common/AuthProvider";
+import { Toaster, toast } from 'sonner';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,7 +23,8 @@ const openSans = Open_Sans({
 
 export const metadata: Metadata = {
   title: "Elevate NITC",
-  description: "Bringing you experiences and oppurtunities that not only inform, but elevates.",
+  description:
+    "Bringing you experiences and oppurtunities that not only inform, but elevates.",
 };
 
 export default function RootLayout({
@@ -35,6 +37,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${openSans.variable} antialiased bg-zinc-400 `}
       >
+        <Toaster richColors position="top-right"/>
         <SessionProvider>
           <AuthProvider>
             <Navbar variant="white" />

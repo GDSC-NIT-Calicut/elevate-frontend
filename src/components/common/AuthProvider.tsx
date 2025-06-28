@@ -9,7 +9,7 @@ interface Tokens {
   refresh: string;
 }
 
-interface User {
+export interface User {
   email: string;
   backup_email: string | null;
   name: string;
@@ -19,7 +19,7 @@ interface User {
   role: 'student' | 'admin';
 }
 
-interface AuthContextType {
+export interface AuthContextType {
   user: User | null;
   tokens: Tokens | null;
   loading: boolean;
@@ -41,6 +41,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     const fetchTokens = async () => {
+      console.log("Auth status: ", status)
+      if(status === 'loading') return;
       if (status === 'authenticated' && session) {
         console.log('Fetching tokens for', session.user?.email);
         try {
