@@ -41,7 +41,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     const fetchTokens = async () => {
-      console.log("Auth status: ", status)
       if(status === 'loading') return;
       if (status === 'authenticated' && session) {
         console.log('Fetching tokens for', session.user?.email);

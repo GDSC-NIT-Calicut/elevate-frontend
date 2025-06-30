@@ -44,12 +44,12 @@ const ExperienceForm = () => {
   const { user, tokens, loading, isAuthenticated }: AuthContextType = useAuth();
   useEffect(() => {
     if (!loading) {
-      if (!isAuthenticated) router.replace("/login");
+      if (!isAuthenticated || user?.role !== 'student') router.replace("/401");
       if (user?.name) {
         setForm((prev) => ({ ...prev, studentAuthor: user.name! }));  // setting the gmail name to author
       }
     }
-  }, [user?.name, isAuthenticated, loading]);
+  }, [user, isAuthenticated, loading]);
 
   const handleChange = (
     e: React.ChangeEvent<

@@ -8,11 +8,11 @@ export interface NavbarProps {
 
 export const Navbar = ({ variant = 'white' }: NavbarProps) => {
   const isBlue = variant === 'blue';
-  const textColor = isBlue ? 'text-white' : 'text-elevate-blue-400';
+  const textColor = isBlue ? 'text-white' : 'text-gray-700';
 
   return (
     <nav
-      className={`flex justify-between items-center p-4 border-b shadow-sm 
+      className={`flex justify-between items-center p-4 border-b font-semibold shadow-sm 
         ${isBlue ? 'bg-blue-400' : 'bg-white'} text-black`}
     >
       <Link href="/" className="text-2xl font-semibold font-sans">
