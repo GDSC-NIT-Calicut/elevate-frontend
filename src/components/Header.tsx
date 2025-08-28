@@ -3,6 +3,7 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet";
 import { useState } from "react";
+import { LoginButton } from "./LoginButton";
 
 interface HeaderProps {
   onSearch: (query: string) => void;
@@ -69,24 +70,7 @@ export function Header({ onSearch, onNavigate, currentView }: HeaderProps) {
               </div>
             )}
             
-            <Button 
-              onClick={() => handleNavigate('submit')}
-              className="hidden sm:flex"
-              variant={currentView === 'submit' ? 'yellow' : 'outline'}
-            >
-              <Plus className="w-4 h-4 mr-2" />
-              Share Experience
-            </Button>
-            
-            <Button 
-              onClick={() => handleNavigate('admin')}
-              variant={currentView === 'admin' ? 'default' : 'outline'}
-              size="sm"
-              className="hidden sm:block"
-            >
-              <Shield className="w-4 h-4 mr-2" />
-              Admin
-            </Button>
+            <LoginButton />
             
             {/* Mobile Menu */}
             <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
@@ -139,6 +123,11 @@ export function Header({ onSearch, onNavigate, currentView }: HeaderProps) {
                       <Shield className="w-4 h-4 mr-2" />
                       Admin Panel
                     </Button>
+                  </div>
+                  
+                  {/* Login/User Section */}
+                  <div className="border-t pt-4">
+                    <LoginButton />
                   </div>
                   
                   {/* Quick Links */}

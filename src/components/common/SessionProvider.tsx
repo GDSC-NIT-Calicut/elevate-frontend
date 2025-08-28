@@ -1,8 +1,8 @@
 // components/SessionProvider.tsx
 "use client";
 
-import { SessionProvider as Provider } from "next-auth/react";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 export function SessionProvider({ children }: { children: React.ReactNode }) {
-  return <Provider>{children}</Provider>;
+  return <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || ""}>{children}</GoogleOAuthProvider>;
 }

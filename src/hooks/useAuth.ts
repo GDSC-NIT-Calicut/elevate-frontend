@@ -1,52 +1,76 @@
 // hooks/useAuth.ts
-import { useSession } from "next-auth/react"
+import { useGoogleLogin, TokenResponse } from "@react-oauth/google"
 import { useState } from "react"
-
 import axios from "axios"
 
-// hooks/useAuth.ts
 type AuthState = {
   isAuthenticated: boolean
-  user: null | { id: string; email: string; name: string }
+  user: null | {
+    email: string
+    name: string
+    roll_number?: string
+    department?: string
+    programme?: string
+    role?: string
+  }
   tokens: null | { access: string; refresh: string }
   loading: boolean
   error: null | string
 }
 
 export const useAuth = () => {
-  const { data: session, status } = useSession()
   const [authState, setAuthState] = useState<AuthState>({
     isAuthenticated: false,
     user: null,
     tokens: null,
-    loading: true,
+    loading: false,
     error: null,
   })
 
-  const getDjangoTokens = async () => {
-    if (!session) return
-    try {
-      const response = await axios.post(`${process.env.BACKEND_URL}/api/auth/verify-and-get-tokens`)
-      const { tokens, user } = response.data
-      
-      localStorage.setItem('access_token', tokens.access)
-      localStorage.setItem('refresh_token', tokens.refresh)
-      
-      setAuthState({
-        isAuthenticated: true,
-        user,
-        tokens,
-        loading: false,
-        error: null,
-      })
-    } catch (error) {
-      setAuthState(prev => ({
-        ...prev,
-        loading: false,
-        error: 'Failed to authenticate with backend',
-      }))
-    }
-  }
+  // Google login hook
+  const loginWithGoogle = useGoogleLogin({
+    onSuccess: async (tokenResponse: TokenResponse) => {
+      try {
+        // Send Google's id_token to your Django backend
+        const response = await axios.post(
+          `${process.env.NEXT_PUBLIC_API_URL}/google-oauth`,
+          {
+            id_token: tokenResponse.access_token, // Google id_token
+          }
+        )
 
-  // Additional implementation...
+        const { tokens, user } = response.data
+
+        localStorage.setItem("access_token", tokens.access)
+        localStorage.setItem("refresh_token", tokens.refresh)
+
+        setAuthState({
+          isAuthenticated: true,
+          user,
+          tokens,
+          loading: false,
+          error: null,
+        })
+      } catch (err: any) {
+        setAuthState({
+          isAuthenticated: false,
+          user: null,
+          tokens: null,
+          loading: false,
+          error: err.response?.data?.message || "Login failed",
+        })
+      }
+    },
+    onError: () => {
+      setAuthState({
+        isAuthenticated: false,
+        user: null,
+        tokens: null,
+        loading: false,
+        error: "Google login failed",
+      })
+    },
+  })
+
+  return { ...authState, loginWithGoogle }
 }

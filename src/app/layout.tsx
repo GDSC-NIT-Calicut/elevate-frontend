@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import { Roboto, Nunito } from "next/font/google";
 import "./globals.css";
-import { SessionProvider } from "@/components/common/SessionProvider";
+import { Providers } from "@/components/Providers";
 import { Navbar } from "@/components/common/Navbar";
-import { AuthProvider } from "@/components/common/AuthProvider";
 
 const roboto = Roboto({
   variable: "--font-roboto",
@@ -32,12 +31,9 @@ export default function RootLayout({
       <body
         className={`${roboto.variable} ${nunito.variable} antialiased bg-zinc-400`}
       >
-        <SessionProvider>
-          <AuthProvider>
-            {/* <Navbar variant="white" /> */}
-            {children}
-          </AuthProvider>
-        </SessionProvider>
+        <Providers>
+          {children}
+        </Providers>
       </body>
     </html>
   );

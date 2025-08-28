@@ -1,29 +1,31 @@
-'use client';
+'use client'
 
-import { createContext, useContext, useEffect, useState } from 'react';
-import { useSession } from 'next-auth/react';
-import axios from 'axios';
+import { createContext, useContext, useEffect, useState } from 'react'
+import { useGoogleLogin, TokenResponse } from '@react-oauth/google'
+import axios from 'axios'
 
 interface Tokens {
-  access: string;
-  refresh: string;
+  access: string
+  refresh: string
 }
 
 interface User {
-  email: string;
-  backup_email: string | null;
-  name: string;
-  roll_number: string;
-  department: string;
-  programme: string;
-  role: 'student' | 'admin';
+  email: string
+  backup_email: string | null
+  name: string
+  roll_number: string
+  department: string
+  programme: string
+  role: 'student' | 'admin'
 }
 
 interface AuthContextType {
-  user: User | null;
-  tokens: Tokens | null;
-  loading: boolean;
-  isAuthenticated: boolean;
+  user: User | null
+  tokens: Tokens | null
+  loading: boolean
+  isAuthenticated: boolean
+  loginWithGoogle: () => void
+  logout: () => void
 }
 
 const AuthContext = createContext<AuthContextType>({
@@ -31,53 +33,67 @@ const AuthContext = createContext<AuthContextType>({
   tokens: null,
   loading: true,
   isAuthenticated: false,
-});
+  loginWithGoogle: () => {},
+  logout: () => {},
+})
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const { data: session, status } = useSession();
-  const [user, setUser] = useState<User | null>(null);
-  const [tokens, setTokens] = useState<Tokens | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState<User | null>(null)
+  const [tokens, setTokens] = useState<Tokens | null>(null)
+  const [loading, setLoading] = useState(true)
 
+  // Restore from localStorage on mount
   useEffect(() => {
-    const fetchTokens = async () => {
-      if (status === 'authenticated' && session) {
-        console.log('Fetching tokens for', session.user?.email);
-        try {
-          const res = await axios.post('/api/auth/verify-and-get-tokens');
-          console.log('Token response:', res.data);
+    const storedAccess = localStorage.getItem('accessToken')
+    const storedRefresh = localStorage.getItem('refreshToken')
+    const storedUser = localStorage.getItem('user')
 
-          if (res.data.success) {
-            const { tokens, user } = res.data;
-            localStorage.setItem('accessToken', tokens.access);
-            localStorage.setItem('refreshToken', tokens.refresh);
-            setTokens(tokens);
-            setUser(user);
-          } else {
-            console.warn('verify-and-get-tokens returned success: false');
-            setUser(null);
-            setTokens(null);
-          }
-        } catch (err) {
-          console.error('Token verification failed:', err);
-          localStorage.removeItem('accessToken');
-          localStorage.removeItem('refreshToken');
-          setUser(null);
-          setTokens(null);
-        } finally {
-          setLoading(false);
+    if (storedAccess && storedRefresh && storedUser) {
+      setTokens({ access: storedAccess, refresh: storedRefresh })
+      setUser(JSON.parse(storedUser))
+    }
+    setLoading(false)
+  }, [])
+
+  // Google login hook
+  const loginWithGoogle = useGoogleLogin({
+    flow: 'implicit', // gets id_token
+    onSuccess: async (tokenResponse: TokenResponse) => {
+      try {
+        // Send Google id_token to Django
+        const res = await axios.post(
+          `${process.env.NEXT_PUBLIC_API_URL}/google-oauth`,
+          { id_token: tokenResponse.access_token }
+        )
+
+        if (res.data.success) {
+          const { tokens, user } = res.data
+
+          localStorage.setItem('accessToken', tokens.access)
+          localStorage.setItem('refreshToken', tokens.refresh)
+          localStorage.setItem('user', JSON.stringify(user))
+
+          setTokens(tokens)
+          setUser(user)
+        } else {
+          console.warn('Google OAuth failed:', res.data.message)
         }
-      } else if (status === 'unauthenticated') {
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('refreshToken');
-        setTokens(null);
-        setUser(null);
-        setLoading(false);
+      } catch (err) {
+        console.error('Google OAuth error:', err)
       }
-    };
+    },
+    onError: () => {
+      console.error('Google login failed')
+    },
+  })
 
-    fetchTokens();
-  }, [status, session]);
+  const logout = () => {
+    localStorage.removeItem('accessToken')
+    localStorage.removeItem('refreshToken')
+    localStorage.removeItem('user')
+    setUser(null)
+    setTokens(null)
+  }
 
   return (
     <AuthContext.Provider
@@ -86,11 +102,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         tokens,
         loading,
         isAuthenticated: !!user && !!tokens,
+        loginWithGoogle,
+        logout,
       }}
     >
       {children}
     </AuthContext.Provider>
-  );
-};
+  )
+}
 
-export const useAuth = () => useContext(AuthContext);
+export const useAuth = () => useContext(AuthContext)
