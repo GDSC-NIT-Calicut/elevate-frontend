@@ -1,23 +1,84 @@
-type ExperienceCardProps = {
+export type ExperienceCardProps = {
   exp: {
     id: string;
     title: string;
-    shortDescription: string;
-    experienceDate: string; // Format: "MMYY"
+    role: string;
+    short_description: string;
+    content: any; // JSONField
+    tips: string;
+    published_date: string;
+    experience_date: string;
+    visibility: boolean;
     verified: boolean;
+    compensation: string;
+    job_type: 'fte' | 'internship' | 'research' | 'other';
+    author: User;
+    company: Company;
+    tags: Tag[];
   };
 };
 
-type CompanyCardProps = {
+export type User = {
+  id: string;
+  email: string;
+  backup_email?: string;
+  name: string;
+  roll_number?: string;
+  department?: string;
+  programme?: string;
+  role: 'student' | 'spoc' | 'pr' | 'admin' | 'other';
+  is_active: boolean;
+  is_staff: boolean;
+};
+
+export type TagType = {
+  id: string;
+  name: string;
+};
+
+export type Tag = {
+  id: string;
+  title: string;
+  type?: TagType;
+};
+
+export type Rounds = {
+  title: string;
+  roundType: 'Online Assessment' | 'Technical Interview' | 'Behavioral Interview' | 'HR Interview' | 'Case Study' | 'Technical Discussion' | 'Other';
+  description: string;
+};
+
+export type Experience = {
+  id: string;
+  cover_image?: string;
+  title: string;
+  role: string;
+  short_description: string;
+  content: any; // JSONField
+  tips: string;
+  published_date: string;
+  experience_date: string;
+  visibility: boolean;
+  verified: boolean;
+  compensation: string;
+  job_type: 'fte' | 'internship' | 'research' | 'other';
+  author: User;
+  company: Company;
+  tags: Tag[];
+};
+
+
+export type CompanyCardProps = {
   company: {
     id: string;
     name: string;
-    logo: string; // URL or relative path
     slug: string;
+    logo: string;
+    description: string;
   };
 };
 
-type NavbarProps = {
+export type NavbarProps = {
   user?: {
     name: string;
     role: 'admin' | 'student' | 'moderator';
@@ -25,34 +86,25 @@ type NavbarProps = {
   };
 };
 
-type ExperiencePageParams = {
+export type ExperiencePageParams = {
   params: {
     id: string; // experience id (e.g. 'e1')
   };
 };
 
-type Experience = {
-  id: string;
-  title: string;
-  shortDescription: string;
-  content: string; // markdown
-  experienceDate: string;
-  publishedDate: string;
-  verified: boolean;
-  student: string; // student.slug
-  company: string; // company.id
-};
 
-type Student = {
+export type Student = {
   slug: string;
   name: string;
   batch: string;
   image: string;
 };
 
-type Company = {
+export type Company = {
   id: string;
   name: string;
+  slug: string;
   logo: string;
+  description: string;
 };
 

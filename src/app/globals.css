@@ -6,8 +6,9 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-roboto);
+  --font-heading: var(--font-nunito);
+  --font-mono: var(--font-roboto);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -76,6 +77,82 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+
+  /* Green Color Scale */
+  --green-1: #fafefb;
+  --green-2: #f5fbf5;
+  --green-3: #e7f7e7;
+  --green-4: #d7f2d8;
+  --green-5: #c4eac6;
+  --green-6: #ade0b0;
+  --green-7: #8cd192;
+  --green-8: #5abd66;
+  --green-9: #2ba644;
+  --green-10: #20983b;
+  --green-11: #10812d;
+  --green-12: #1d3d20;
+
+  --green-a1: #00cc3305;
+  --green-a2: #0099000a;
+  --green-a3: #00aa0018;
+  --green-a4: #00ad0728;
+  --green-a5: #01a5093b;
+  --green-a6: #009f0a52;
+  --green-a7: #00990e73;
+  --green-a8: #009913a5;
+  --green-a9: #00941ed4;
+  --green-a10: #00891fdf;
+  --green-a11: #00791fef;
+  --green-a12: #002403e2;
+
+  --green-contrast: #fff;
+  --green-surface: #f3faf3cc;
+  --green-indicator: #2ba644;
+  --green-track: #2ba644;
+
+  /* Yellow Accent Color */
+  --yellow-500: #F7B32B;
+  --yellow-400: #F8C255;
+  --yellow-600: #E6A320;
+  --yellow-300: #F9D17A;
+  --yellow-700: #D4941A;
+}
+
+@supports (color: color(display-p3 1 1 1)) {
+  @media (color-gamut: p3) {
+    :root {
+      --green-1: oklch(99.4% 0.0063 146.4);
+      --green-2: oklch(98.2% 0.0109 146.4);
+      --green-3: oklch(96.1% 0.0274 146.4);
+      --green-4: oklch(93.4% 0.0437 146.4);
+      --green-5: oklch(90.1% 0.0626 146.4);
+      --green-6: oklch(85.8% 0.0845 146.4);
+      --green-7: oklch(79.8% 0.1124 146.4);
+      --green-8: oklch(71.6% 0.1539 146.4);
+      --green-9: oklch(63.8% 0.1738 146.4);
+      --green-10: oklch(59.7% 0.1676 146.4);
+      --green-11: oklch(52.7% 0.1534 146.4);
+      --green-12: oklch(32.7% 0.0633 146.4);
+
+      --green-a1: color(display-p3 0.0235 0.7569 0.0235 / 0.016);
+      --green-a2: color(display-p3 0.1216 0.6118 0.0235 / 0.04);
+      --green-a3: color(display-p3 0.098 0.6157 0.0118 / 0.091);
+      --green-a4: color(display-p3 0.0627 0.6275 0.0078 / 0.146);
+      --green-a5: color(display-p3 0.0392 0.5961 0.0039 / 0.212);
+      --green-a6: color(display-p3 0.0431 0.5765 0.0039 / 0.295);
+      --green-a7: color(display-p3 0.0314 0.5373 0.0039 / 0.404);
+      --green-a8: color(display-p3 0.0353 0.5294 0 / 0.565);
+      --green-a9: color(display-p3 0.0196 0.4784 0 / 0.687);
+      --green-a10: color(display-p3 0.0157 0.4314 0 / 0.722);
+      --green-a11: color(display-p3 0.0157 0.3569 0 / 0.781);
+      --green-a12: color(display-p3 0.0078 0.1137 0 / 0.863);
+
+      --green-contrast: #fff;
+      --green-surface: color(display-p3 0.9569 0.9804 0.9529 / 0.8);
+      --green-indicator: oklch(63.8% 0.1738 146.4);
+      --green-track: oklch(63.8% 0.1738 146.4);
+    }
+  }
 }
 
 .dark {
@@ -110,6 +187,82 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+
+  /* Green Color Scale - Dark Theme */
+  --green-1: #0d130e;
+  --green-2: #141a14;
+  --green-3: #1c2a1d;
+  --green-4: #1f3a23;
+  --green-5: #27482b;
+  --green-6: #2f5735;
+  --green-7: #37673e;
+  --green-8: #407948;
+  --green-9: #46a758;
+  --green-10: #389a4c;
+  --green-11: #73d081;
+  --green-12: #c0f0c4;
+
+  --green-a1: #00bb0003;
+  --green-a2: #5ef75e0a;
+  --green-a3: #79fe831b;
+  --green-a4: #63ff7a2c;
+  --green-a5: #71ff823b;
+  --green-a6: #77ff8c4b;
+  --green-a7: #7afd8d5d;
+  --green-a8: #7cfd8e70;
+  --green-a9: #65ff82a1;
+  --green-a10: #55ff7893;
+  --green-a11: #8bff9dcd;
+  --green-a12: #ccffd0ef;
+
+  --green-contrast: #fff;
+  --green-surface: #17231780;
+  --green-indicator: #46a758;
+  --green-track: #46a758;
+
+  /* Yellow Accent Color */
+  --yellow-500: #F7B32B;
+  --yellow-400: #F8C255;
+  --yellow-600: #E6A320;
+  --yellow-300: #F9D17A;
+  --yellow-700: #D4941A;
+}
+
+@supports (color: color(display-p3 1 1 1)) {
+  @media (color-gamut: p3) {
+    .dark {
+      --green-1: oklch(17.8% 0.0141 147.4);
+      --green-2: oklch(20.9% 0.0141 147.4);
+      --green-3: oklch(26.6% 0.03 147.4);
+      --green-4: oklch(31.9% 0.0522 147.4);
+      --green-5: oklch(36.7% 0.0619 147.4);
+      --green-6: oklch(41.6% 0.0721 147.4);
+      --green-7: oklch(46.8% 0.0835 147.4);
+      --green-8: oklch(52.4% 0.0972 147.4);
+      --green-9: oklch(65.1% 0.1468 147.4);
+      --green-10: oklch(61.1% 0.1468 147.4);
+      --green-11: oklch(78% 0.1421 147.4);
+      --green-12: oklch(91.1% 0.078 147.4);
+
+      --green-a1: color(display-p3 0 0.9412 0 / 0.009);
+      --green-a2: color(display-p3 0.4824 0.9961 0.3765 / 0.038);
+      --green-a3: color(display-p3 0.5882 0.9922 0.549 / 0.106);
+      --green-a4: color(display-p3 0.5333 0.9961 0.5333 / 0.169);
+      --green-a5: color(display-p3 0.5882 1 0.5686 / 0.227);
+      --green-a6: color(display-p3 0.6078 1 0.5961 / 0.29);
+      --green-a7: color(display-p3 0.6157 1 0.6039 / 0.358);
+      --green-a8: color(display-p3 0.6196 1 0.6078 / 0.433);
+      --green-a9: color(display-p3 0.5725 1 0.5686 / 0.622);
+      --green-a10: color(display-p3 0.5373 1 0.5373 / 0.568);
+      --green-a11: color(display-p3 0.6667 1 0.6588 / 0.795);
+      --green-a12: color(display-p3 0.8431 1 0.8353 / 0.933);
+
+      --green-contrast: #fff;
+      --green-surface: color(display-p3 0.0941 0.1333 0.0941 / 0.5);
+      --green-indicator: oklch(65.1% 0.1468 147.4);
+      --green-track: oklch(65.1% 0.1468 147.4);
+    }
+  }
 }
 
 @layer base {
@@ -118,5 +271,75 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-roboto), system-ui, sans-serif;
   }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-nunito), system-ui, sans-serif;
+  }
+}
+
+@layer utilities {
+  /* Green color utilities */
+  .text-green-1 { color: var(--green-1); }
+  .text-green-2 { color: var(--green-2); }
+  .text-green-3 { color: var(--green-3); }
+  .text-green-4 { color: var(--green-4); }
+  .text-green-5 { color: var(--green-5); }
+  .text-green-6 { color: var(--green-6); }
+  .text-green-7 { color: var(--green-7); }
+  .text-green-8 { color: var(--green-8); }
+  .text-green-9 { color: var(--green-9); }
+  .text-green-10 { color: var(--green-10); }
+  .text-green-11 { color: var(--green-11); }
+  .text-green-12 { color: var(--green-12); }
+
+  .bg-green-1 { background-color: var(--green-1); }
+  .bg-green-2 { background-color: var(--green-2); }
+  .bg-green-3 { background-color: var(--green-3); }
+  .bg-green-4 { background-color: var(--green-4); }
+  .bg-green-5 { background-color: var(--green-5); }
+  .bg-green-6 { background-color: var(--green-6); }
+  .bg-green-7 { background-color: var(--green-7); }
+  .bg-green-8 { background-color: var(--green-8); }
+  .bg-green-9 { background-color: var(--green-9); }
+  .bg-green-10 { background-color: var(--green-10); }
+  .bg-green-11 { background-color: var(--green-11); }
+  .bg-green-12 { background-color: var(--green-12); }
+
+  .border-green-1 { border-color: var(--green-1); }
+  .border-green-2 { border-color: var(--green-2); }
+  .border-green-3 { border-color: var(--green-3); }
+  .border-green-4 { border-color: var(--green-4); }
+  .border-green-5 { border-color: var(--green-5); }
+  .border-green-6 { border-color: var(--green-6); }
+  .border-green-7 { border-color: var(--green-7); }
+  .border-green-8 { border-color: var(--green-8); }
+  .border-green-9 { border-color: var(--green-9); }
+  .border-green-10 { border-color: var(--green-10); }
+  .border-green-11 { border-color: var(--green-11); }
+  .border-green-12 { border-color: var(--green-12); }
+
+  /* Yellow color utilities */
+  .text-yellow-300 { color: var(--yellow-300); }
+  .text-yellow-400 { color: var(--yellow-400); }
+  .text-yellow-500 { color: var(--yellow-500); }
+  .text-yellow-600 { color: var(--yellow-600); }
+  .text-yellow-700 { color: var(--yellow-700); }
+
+  .bg-yellow-300 { background-color: var(--yellow-300); }
+  .bg-yellow-400 { background-color: var(--yellow-400); }
+  .bg-yellow-500 { background-color: var(--yellow-500); }
+  .bg-yellow-600 { background-color: var(--yellow-600); }
+  .bg-yellow-700 { background-color: var(--yellow-700); }
+
+  .border-yellow-300 { border-color: var(--yellow-300); }
+  .border-yellow-400 { border-color: var(--yellow-400); }
+  .border-yellow-500 { border-color: var(--yellow-500); }
+  .border-yellow-600 { border-color: var(--yellow-600); }
+  .border-yellow-700 { border-color: var(--yellow-700); }
+
+  /* Font utilities */
+  .font-roboto { font-family: var(--font-roboto), system-ui, sans-serif; }
+  .font-nunito { font-family: var(--font-nunito), system-ui, sans-serif; }
 }
