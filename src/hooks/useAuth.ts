@@ -26,7 +26,7 @@ export const useAuth = () => {
   const getDjangoTokens = async () => {
     if (!session) return
     try {
-      const response = await axios.post(`${process.env.NEXTAUTH_URL}/api/auth/verify-and-get-tokens`)
+      const response = await axios.post(`${process.env.BACKEND_URL}/api/auth/verify-and-get-tokens`)
       const { tokens, user } = response.data
       
       localStorage.setItem('access_token', tokens.access)

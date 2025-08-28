@@ -5,16 +5,15 @@ import { HeroSection } from "../components/HeroSection";
 import { FilterSection, FilterState } from "../components/FilterSection";
 import { ExperienceCard } from "../components/ExperienceCard";
 import { Experience } from "@/types";
-import { ExperienceDetail } from "../components/ExperienceDetail";
+
 
 import { Footer } from "../components/Footer";
 import { SubmissionForm } from "../components/SubmissionForm";
-import { AdminPanel } from "../components/AdminPanel";
 import { Toaster } from "../components/ui/sonner";
 import mockExperiences from "../hooks/useMock";
 
 
-type ViewType = 'main' | 'submit' | 'admin' | 'detail';
+type ViewType = 'main' | 'submit' | 'admin';
 
 export default function App() {
   const [currentView, setCurrentView] = useState<ViewType>('main');
@@ -80,10 +79,7 @@ export default function App() {
     );
   };
 
-  const handleViewExperienceDetail = (id: string) => {
-    setSelectedExperienceId(id);
-    setCurrentView('detail');
-  };
+
 
   const handleNavigate = (view: 'main' | 'submit' | 'admin') => {
     setCurrentView(view);
@@ -133,23 +129,8 @@ export default function App() {
             onBack={() => setCurrentView('main')}
           />
         );
-      case 'admin':
-        return (
-          <AdminPanel
-            experiences={experiences}
-            onApprove={handleApproveExperience}
-            onReject={handleRejectExperience}
-            onEdit={handleEditExperience}
-            onBack={() => setCurrentView('main')}
-          />
-        );
-      case 'detail':
-        return selectedExperience ? (
-          <ExperienceDetail
-            experience={selectedExperience}
-            onBack={() => setCurrentView('main')}
-          />
-        ) : null;
+
+
       default:
         return (
           <>
@@ -183,7 +164,6 @@ export default function App() {
                       key={experience.id} 
                       experience={experience} 
                       isCompact={true}
-                      onViewDetails={handleViewExperienceDetail}
                     />
                   ))}
                 </div>
@@ -215,7 +195,7 @@ export default function App() {
       <Header 
         onSearch={setSearchQuery} 
         onNavigate={handleNavigate}
-        currentView={currentView === 'detail' ? 'main' : currentView}
+        currentView={currentView}
       />
       {renderCurrentView()}
       <Toaster />
