@@ -1,2 +1,1 @@
-export { useAuth } from './useAuth';
-export { useAdmin } from './useAdmin';
+export { useGoogleAuth } from './useGoogleAuth';

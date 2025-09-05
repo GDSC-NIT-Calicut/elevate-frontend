@@ -4,11 +4,12 @@ import { Input } from "./ui/input";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet";
 import { useState } from "react";
 import { LoginButton } from "./LoginButton";
+import Link from "next/link";
 
 interface HeaderProps {
   onSearch: (query: string) => void;
   onNavigate: (view: 'main' | 'submit' | 'admin') => void;
-  currentView: 'main' | 'submit' | 'admin';
+  currentView?: 'main' | 'submit' | 'admin';
 }
 
 export function Header({ onSearch, onNavigate, currentView }: HeaderProps) {
@@ -39,23 +40,16 @@ export function Header({ onSearch, onNavigate, currentView }: HeaderProps) {
           </div>
           
           <nav className="hidden md:flex space-x-8">
-            <button 
-              onClick={() => handleNavigate('main')}
-              className={`transition-colors ${
-                currentView === 'main' 
-                  ? 'text-green-9' 
-                  : 'text-green-11 hover:text-green-9'
-              }`}
-            >
+            <Link href="/experiences" className="text-green-11 hover:text-green-9 transition-colors">
               Experiences
-            </button>
+            </Link>
 
-            <a href="#companies" className="text-green-11 hover:text-green-9 transition-colors">
+            <Link href="/companies" className="text-green-11 hover:text-green-9 transition-colors">
               Companies
-            </a>
-            <a href="#about" className="text-green-11 hover:text-green-9 transition-colors">
+            </Link>
+            <Link href="/about" className="text-green-11 hover:text-green-9 transition-colors">
               About
-            </a>
+            </Link>
           </nav>
 
           <div className="flex items-center space-x-4">
