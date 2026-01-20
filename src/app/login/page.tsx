@@ -65,7 +65,7 @@ export default function LoginPage() {
       ) : (
         <button
           onClick={() => signIn("google")}
-          className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
+          className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg"
         >
           Sign in with Google
         </button>

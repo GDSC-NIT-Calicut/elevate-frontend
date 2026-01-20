@@ -1,7 +1,5 @@
 import { Search, Menu, Plus, Shield } from "lucide-react";
-import { Button } from "./ui/button";
 import { Input } from "./ui/input";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet";
 import { useState } from "react";
 import { LoginButton } from "./LoginButton";
 import Link from "next/link";
@@ -11,147 +9,57 @@ interface HeaderProps {
   onNavigate: (view: 'main' | 'submit' | 'admin') => void;
   currentView?: 'main' | 'submit' | 'admin';
 }
-
 export function Header({ onSearch, onNavigate, currentView }: HeaderProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleNavigate = (view: 'main' | 'submit' | 'admin') => {
     onNavigate(view);
-    setIsMobileMenuOpen(false); // Close mobile menu after navigation
+    setIsMobileMenuOpen(false);
   };
 
   return (
-    <header className="bg-green-1 border-b border-green-6 sticky top-0 z-50">
+    <header className="bg-white border-b sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          <div className="flex items-center space-x-4">
-            <div 
-              className="flex items-center space-x-2 cursor-pointer"
-              onClick={() => handleNavigate('main')}
-            >
-              <div className="w-10 h-10 bg-green-9 rounded-lg flex items-center justify-center">
-                <span className="text-green-contrast font-bold">C</span>
-              </div>
-              <div>
-                <h1 className="font-semibold text-green-12">Elevate</h1>
-                <p className="text-xs text-green-11">By GDSC NITC</p>
-              </div>
+        <div className="flex h-16 items-center justify-between gap-4">
+
+          <div
+            className="flex items-center gap-2 cursor-pointer"
+            onClick={() => handleNavigate('main')}
+          >
+            <div className="w-8 h-8 bg-[#11B981] rounded-md flex items-center justify-center">
+              <span className="text-white font-semibold">E</span>
+            </div>
+            <div>
+              <h1 className="font-semibold text-gray-900 leading-none">Elevate</h1>
+              <p className="text-xs text-gray-500 -mt-0.5">By GDSC NITC</p>
             </div>
           </div>
-          
-          <nav className="hidden md:flex space-x-8">
-            <Link href="/experiences" className="text-green-11 hover:text-green-9 transition-colors">
+
+          <nav className="hidden md:flex gap-6 text-sm">
+            <Link href="/experiences" className="text-[#11B981] font-medium">
               Experiences
             </Link>
-
-            <Link href="/companies" className="text-green-11 hover:text-green-9 transition-colors">
+            <Link href="/companies" className="text-gray-600 hover:text-gray-900 transition">
               Companies
             </Link>
-            <Link href="/about" className="text-green-11 hover:text-green-9 transition-colors">
+            <Link href="/about" className="text-gray-600 hover:text-gray-900 transition">
               About
             </Link>
           </nav>
 
-          <div className="flex items-center space-x-4">
-            {currentView === 'main' && (
-              <div className="relative hidden sm:block">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
-                <Input
-                  placeholder="Search companies or roles..."
-                  className="pl-10 w-64"
-                  onChange={(e) => onSearch(e.target.value)}
-                />
-              </div>
-            )}
-            
-            <LoginButton />
-            
-            {/* Mobile Menu */}
-            <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
-              <SheetTrigger asChild>
-                <Button variant="outline" size="sm" className="md:hidden">
-                  <Menu className="w-4 h-4" />
-                </Button>
-              </SheetTrigger>
-              <SheetContent side="right" className="w-80">
-                <SheetHeader>
-                  <SheetTitle>Menu</SheetTitle>
-                </SheetHeader>
-                <div className="flex flex-col space-y-4 mt-8">
-                  {/* Search on mobile */}
-                  {currentView === 'main' && (
-                    <div className="relative">
-                      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-green-11 w-4 h-4" />
-                      <Input
-                        placeholder="Search companies or roles..."
-                        className="pl-10"
-                        onChange={(e) => onSearch(e.target.value)}
-                      />
-                    </div>
-                  )}
-                  
-                  {/* Navigation Items */}
-                  <div className="space-y-2">
-                    <Button 
-                      variant={currentView === 'main' ? 'default' : 'ghost'}
-                      className="w-full justify-start"
-                      onClick={() => handleNavigate('main')}
-                    >
-                      Experiences
-                    </Button>
-                    
-                    <Button 
-                      variant={currentView === 'submit' ? 'yellow' : 'ghost'}
-                      className="w-full justify-start"
-                      onClick={() => handleNavigate('submit')}
-                    >
-                      <Plus className="w-4 h-4 mr-2" />
-                      Share Experience
-                    </Button>
-                    
-                    <Button 
-                      variant={currentView === 'admin' ? 'default' : 'ghost'}
-                      className="w-full justify-start"
-                      onClick={() => handleNavigate('admin')}
-                    >
-                      <Shield className="w-4 h-4 mr-2" />
-                      Admin Panel
-                    </Button>
-                  </div>
-                  
-                  {/* Login/User Section */}
-                  <div className="border-t pt-4">
-                    <LoginButton />
-                  </div>
-                  
-                  {/* Quick Links */}
-                  <div className="border-t pt-4 space-y-2">
-                    <h3 className="font-medium text-sm text-green-11 mb-2">Quick Links</h3>
+          {currentView === 'main' && (
+            <div className="relative hidden md:flex w-80">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+              <Input
+                placeholder="Search companies or roles..."
+                className="pl-10 rounded-full bg-gray-100 border-0 text-sm"
+                onChange={(e) => onSearch(e.target.value)}
+              />
+            </div>
+          )}
 
-                    <Button 
-                      variant="ghost" 
-                      className="w-full justify-start"
-                      onClick={() => {
-                        document.getElementById('companies')?.scrollIntoView({ behavior: 'smooth' });
-                        setIsMobileMenuOpen(false);
-                      }}
-                    >
-                      Companies
-                    </Button>
-                    <Button 
-                      variant="ghost" 
-                      className="w-full justify-start"
-                      onClick={() => {
-                        document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
-                        setIsMobileMenuOpen(false);
-                      }}
-                    >
-                      About
-                    </Button>
-                  </div>
-                </div>
-              </SheetContent>
-            </Sheet>
+          <div className="flex items-center gap-2">
+            <LoginButton />
           </div>
         </div>
       </div>

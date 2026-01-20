@@ -42,21 +42,21 @@ const mockCompanies: Company[] = [
     id: "1",
     name: "Google",
     slug: "google",
-    logo: "/logos/google.png",
+    logo: "https://cdn.simpleicons.org/google/4285F4",
     description: "Google is a multinational technology company that specializes in Internet-related services and products."
   },
   {
     id: "2",
     name: "Microsoft",
     slug: "microsoft",
-    logo: "/logos/microsoft.png",
+    logo: "https://cdn.simpleicons.org/google/4285F4",
     description: "Microsoft Corporation is an American multinational technology company."
   },
   {
     id: "3",
     name: "Amazon",
     slug: "amazon",
-    logo: "/logos/amazon.png",
+    logo: "https://cdn.simpleicons.org/meta/0668E1",
     description: "Amazon.com, Inc. is an American multinational technology company."
   }
 ];

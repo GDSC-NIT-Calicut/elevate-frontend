@@ -16,6 +16,7 @@ export type ExperienceCardProps = {
     company: Company;
     tags: Tag[];
   };
+  isCompact? : boolean;
 };
 
 export type User = {

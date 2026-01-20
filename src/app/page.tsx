@@ -135,7 +135,7 @@ export default function App() {
         return (
           <>
             <HeroSection />
-            <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 bg-green-2">
+            <main className="max-w-[80%] mx-auto px-4 sm:px-6 lg:px-8 py-12 bg-green-2">
               <section id="experiences">
                 <div className="text-center mb-8">
                   <h2 className="text-3xl font-bold text-green-12 mb-4">Placement Experiences</h2>
@@ -152,7 +152,7 @@ export default function App() {
                 />
 
                 <div className="mb-6">
-                  <p className="text-green-11">
+                  <p className="text-[#11B981] font-semibold">
                     Showing {filteredExperiences.length} of {approvedExperiences.length} experiences
                     {searchQuery && ` for "${searchQuery}"`}
                   </p>
@@ -162,7 +162,7 @@ export default function App() {
                   {filteredExperiences.map((experience) => (
                     <ExperienceCard 
                       key={experience.id} 
-                      experience={experience} 
+                      exp={experience} 
                       isCompact={true}
                     />
                   ))}
