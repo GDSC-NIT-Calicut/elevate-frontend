@@ -15,11 +15,9 @@ export function Providers({ children }: ProvidersProps) {
 
   return (
     <GoogleOAuthProvider clientId={googleClientId}>
-      <SessionProvider>
         <AuthProvider>
           {children}
         </AuthProvider>
-      </SessionProvider>
     </GoogleOAuthProvider>
   );
 }

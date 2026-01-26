@@ -1,98 +1,61 @@
-import { Mail, Phone, MapPin, ExternalLink } from "lucide-react";
+import { Mail, Github, Globe, ExternalLink } from "lucide-react";
 
 export function Footer() {
   return (
-    <footer className="bg-[#11B981] text-green-contrast">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* College Info */}
-          <div className="col-span-1 md:col-span-2">
-            <div className="flex items-center space-x-2 mb-4">
-              <div className="w-10 h-10 bg-green-contrast rounded-lg flex items-center justify-center">
-                <span className="text-green-9 font-bold">E</span>
+    <footer className="bg-white dark:bg-zinc-950 border-t border-zinc-200 dark:border-zinc-800">
+      <div className="max-w-7xl mx-auto px-6 py-12">
+        <div className="flex flex-col md:flex-row justify-between items-start gap-12">
+
+          <div className="space-y-4 max-w-xs">
+            <div className="flex items-center space-x-2">
+              <div className="w-8 h-8 bg-emerald-500 rounded flex items-center justify-center">
+                <span className="text-white font-bold text-sm">E</span>
               </div>
-              <div>
-                <h3 className="font-semibold text-xl">Elevate</h3>
-                <p className="text-sm opacity-80">By GDSC NITC</p>
-              </div>
+              <span className="text-xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50">
+                Elevate
+              </span>
             </div>
-            <p className="text-sm opacity-80 mb-4 max-w-md">
-              Empowering students with real placement experiences and interview insights 
-              to help them land their dream jobs at top companies.
+            <p className="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">
+              Real interview insights by NITC students. 
+              Bridging the gap between preparation and placement.
             </p>
-            <div className="space-y-2 text-sm">
-              <div className="flex items-center space-x-2">
-                <MapPin className="w-4 h-4" />
-                <span>XYZ Engineering College, Tech City</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Phone className="w-4 h-4" />
-                <span>+91 12345 67890</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Mail className="w-4 h-4" />
-                <span>placements@xyzcollege.edu</span>
-              </div>
+            <div className="flex space-x-4 pt-2">
+              <a href="#" className="text-zinc-400 hover:text-emerald-500 transition-colors"><Github size={18} /></a>
+              <a href="#" className="text-zinc-400 hover:text-emerald-500 transition-colors"><Globe size={18} /></a>
+              <a href="#" className="text-zinc-400 hover:text-emerald-500 transition-colors"><Mail size={18} /></a>
             </div>
           </div>
 
-          {/* Quick Links */}
-          <div>
-            <h4 className="font-semibold mb-4">Quick Links</h4>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <a href="#experiences" className="opacity-80 hover:opacity-100 transition-opacity">
-                  Browse Experiences
-                </a>
-              </li>
-
-              <li>
-                <a href="#companies" className="opacity-80 hover:opacity-100 transition-opacity">
-                  Partner Companies
-                </a>
-              </li>
-              <li>
-                <a href="#about" className="opacity-80 hover:opacity-100 transition-opacity">
-                  About Us
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          {/* Resources */}
-          <div>
-            <h4 className="font-semibold mb-4">Resources</h4>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <a href="#" className="opacity-80 hover:opacity-100 transition-opacity flex items-center">
-                  Interview Tips
-                  <ExternalLink className="w-3 h-3 ml-1" />
-                </a>
-              </li>
-              <li>
-                <a href="#" className="opacity-80 hover:opacity-100 transition-opacity flex items-center">
-                  Resume Templates
-                  <ExternalLink className="w-3 h-3 ml-1" />
-                </a>
-              </li>
-              <li>
-                <a href="#" className="opacity-80 hover:opacity-100 transition-opacity flex items-center">
-                  Coding Practice
-                  <ExternalLink className="w-3 h-3 ml-1" />
-                </a>
-              </li>
-              <li>
-                <a href="#" className="opacity-80 hover:opacity-100 transition-opacity flex items-center">
-                  Career Guidance
-                  <ExternalLink className="w-3 h-3 ml-1" />
-                </a>
-              </li>
-            </ul>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-12 md:gap-24">
+            <div className="space-y-4">
+              <h4 className="text-xs font-semibold uppercase tracking-widest text-zinc-900 dark:text-zinc-50">Platform</h4>
+              <ul className="space-y-2 text-sm text-zinc-500 dark:text-zinc-400">
+                <li><a href="#experiences" className="hover:text-emerald-500 transition-colors">Experiences</a></li>
+                <li><a href="#companies" className="hover:text-emerald-500 transition-colors">Companies</a></li>
+                <li><a href="#about" className="hover:text-emerald-500 transition-colors">About Us</a></li>
+              </ul>
+            </div>
+            
+            <div className="space-y-4">
+              <h4 className="text-xs font-semibold uppercase tracking-widest text-zinc-900 dark:text-zinc-50">Resources</h4>
+              <ul className="space-y-2 text-sm text-zinc-500 dark:text-zinc-400">
+                <li className="flex items-center group cursor-pointer hover:text-emerald-500 transition-colors">
+                  Interview Tips <ExternalLink className="w-3 h-3 ml-1 opacity-0 group-hover:opacity-100" />
+                </li>
+                <li className="flex items-center group cursor-pointer hover:text-emerald-500 transition-colors">
+                  Resume Guide <ExternalLink className="w-3 h-3 ml-1 opacity-0 group-hover:opacity-100" />
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
 
-        <div className="border-t border-green-contrast/20 mt-8 pt-8 text-center text-sm opacity-80">
-          <p>&copy; {new Date().getFullYear()} Elevate - By GDSC NITC. All rights reserved.</p>
+        <div className="mt-16 pt-8 border-t border-zinc-100 dark:border-zinc-900 flex flex-col md:flex-row justify-between items-center gap-4 text-[12px] text-zinc-400 uppercase tracking-wider">
+          <p>© {new Date().getFullYear()} GDSC NITC</p>
+          <div className="flex space-x-6">
+            <a href="#" className="hover:text-zinc-600 transition-colors">Privacy</a>
+            <a href="#" className="hover:text-zinc-600 transition-colors">Terms</a>
+          </div>
         </div>
       </div>
     </footer>

@@ -183,6 +183,7 @@ export default function App() {
                   </div>
                 )}
               </section>
+              {/* <button className="px-8 py-6 rounded-lg font-semibold text-white bg-green-9 hover:bg-green-10 mx-auto">See all experiences</button> */}
             </main>
             <Footer />
           </>

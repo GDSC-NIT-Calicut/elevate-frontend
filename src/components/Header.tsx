@@ -13,7 +13,7 @@ export function Header({ onSearch, onNavigate, currentView }: HeaderProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleNavigate = (view: 'main' | 'submit' | 'admin') => {
-    onNavigate(view);
+    onNavigate(view); 
     setIsMobileMenuOpen(false);
   };
 

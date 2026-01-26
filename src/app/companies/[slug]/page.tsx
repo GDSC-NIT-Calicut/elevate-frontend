@@ -1,8 +1,9 @@
+import { useParams } from 'next/navigation'
 import React from 'react'
 
-const page = () => {
+const page = ({ params } : { params: { slug: string } }) => {
   return (
-    <div>page</div>
+    <div>page - {params.slug}</div>
   )
 }
 
