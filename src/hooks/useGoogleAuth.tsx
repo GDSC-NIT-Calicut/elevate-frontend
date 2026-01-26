@@ -4,7 +4,7 @@ import { useState, useCallback } from "react";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 
-interface User {
+export interface User {
   email: string;
   name: string;
   roll_number?: string;
@@ -13,7 +13,7 @@ interface User {
   role: string;
 }
 
-interface Tokens {
+export interface Tokens {
   access: string;
   refresh: string;
 }

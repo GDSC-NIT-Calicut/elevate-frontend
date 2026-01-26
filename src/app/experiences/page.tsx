@@ -3,13 +3,12 @@
 import React, { useState, useMemo, useEffect } from "react";
 import { Search, Sparkles, SlidersHorizontal } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { FilterSection } from "@/components/FilterSection";
+import { FilterSection, FilterState } from "@/components/FilterSection";
 import { ExperienceCard } from "@/components/ExperienceCard";
 import LoadingScreen from "@/components/ui/loading";
 import { useAuth } from "@/components/common/AuthProvider";
 import { useRouter } from "next/navigation";
 
-// Mock data based on your Type interfaces
 const MOCK_EXPERIENCES = [
   {
     id: "1",
@@ -153,13 +152,15 @@ const MOCK_EXPERIENCES = [
 
 export default function ExperiencePage() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [activeFilters, setActiveFilters] = useState<any>({});
-  const [isLoading, setIsLoading] = useState(false);
   const { isAuthenticated, user, loading } = useAuth();
-
+  const [isMounted, setIsMounted] = useState(false);
   const router = useRouter();
+
   useEffect(() => {
-    if (!loading) {
+    setIsMounted(true);
+  }, []);
+  useEffect(() => {
+    if (!isMounted && !loading) {
       if (!isAuthenticated || user?.role !== "admin") {
         router.push("/401");
         console.log(user);
@@ -168,36 +169,23 @@ export default function ExperiencePage() {
     }
   }, [isAuthenticated, user, loading, router]);
 
-  if (loading || !isAuthenticated || user?.role !== "admin") {
-    return <LoadingScreen />;
-  }
-
-  // Search and Filter Logic
   const filteredExperiences = useMemo(() => {
     return MOCK_EXPERIENCES.filter((exp) => {
       const matchesSearch =
-        exp.company.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        exp.role.toLowerCase().includes(searchQuery.toLowerCase());
-
-      const matchesCompany =
-        !activeFilters.company || exp.company.name === activeFilters.company;
-
-      return matchesSearch && matchesCompany;
+        exp.company.name
+          .toLowerCase()
+          .includes(searchQuery.trim().toLowerCase()) ||
+        exp.role.toLowerCase().includes(searchQuery.trim().toLowerCase());
+      return matchesSearch;
     });
-  }, [searchQuery, activeFilters]);
+  }, [searchQuery]);
 
-  const handleFilterChange = (key: string, value: string) => {
-    setActiveFilters((prev: any) => ({ ...prev, [key]: value }));
-  };
-
-  const clearFilters = () => {
-    setActiveFilters({});
-    setSearchQuery("");
-  };
+  if (!isMounted || loading || !isAuthenticated || user?.role !== "admin") {
+    return <LoadingScreen />;
+  }
 
   return (
     <div className="min-h-screen bg-[#FAFAFB] pb-20">
-      {/* Header Section */}
       <div className="bg-white border-b border-slate-100 pt-16 pb-12">
         <div className="max-w-5xl mx-auto px-6">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
@@ -210,8 +198,6 @@ export default function ExperiencePage() {
                 companies.
               </p>
             </div>
-
-            {/* Search Bar */}
             <div className="relative w-full md:w-96 group">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 group-focus-within:text-emerald-500 transition-colors" />
               <Input
@@ -226,7 +212,6 @@ export default function ExperiencePage() {
       </div>
 
       <div className="max-w-5xl mx-auto px-6 -mt-6">
-        {/* Filters */}
         {/* <FilterSection 
           filters={}
           onFilterChange={handleFilterChange} 
